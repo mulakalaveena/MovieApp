@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { Input } from 'reactstrap'
 import { apiKey } from '../../config/config';
 import axios from 'axios'
 
@@ -53,7 +52,6 @@ class Search extends Component {
     }
 
     render () {
-        const categoryList = 'story/family';
         return (
             <div className="search-section">
                 <div className="custom-search-wrapper">

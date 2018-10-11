@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
 import  HomePage  from './components/HomePage/HomePage';
-import Search from './components/Search/Search';
 
 
 class App extends Component {
