@@ -1,4 +1,6 @@
 import React, { Component } from 'react'
+import Header from '../header/header'
+import MainContent from '../mainContent/mainContent'
 import Listing from '../Listing/Listing'
 
 class HomePage extends Component {
@@ -12,11 +14,9 @@ class HomePage extends Component {
     render () {
         return (
             <div className = "homepage">
-                <header className = "header">
-                    <p>homepage</p>
-                </header>
+                <Header/>
+                <MainContent/>
                 <Listing/>
-
             </div>
         )
     }

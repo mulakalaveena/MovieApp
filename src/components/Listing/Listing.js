@@ -43,7 +43,7 @@ class Listing extends Component {
     }
     render () {
         return (
-            <div>
+            <div className="container-fluid">
                 <h1>Movies to release</h1>
                 {this.state.topMovies.length > 0 ? 
                 <Row>
