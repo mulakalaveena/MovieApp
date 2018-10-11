@@ -33,7 +33,8 @@
     opacity: 1;
     position: absolute;
   }
-  .custom-search-wrapper form.search-button-visible .search-result-section {
+  .custom-search-wrapper form.search-button-visible .search-result-section,
+  .custom-search-wrapper form.search-button-visible .search-result-overlay {
     opacity: 1;
     transform: scale(1);
     -o-transform: scale(1);
@@ -80,11 +81,11 @@
     color: white;
   }
 .custom-search-wrapper form .search-result-overlay {
-    top: 79px;
+    top: 56px;
     left: 0;
     right: 0;
     bottom: 0;
-    height: calc(100vh - 79px);
+    height: calc(100vh - 56px);
     opacity: 0;
     position: fixed;
     background-color: rgba(60, 74, 96, 0.6);
@@ -94,6 +95,7 @@
     -ms-transform: scale(0);
     -moz-transform: scale(0);
     -webkit-transform: scale(0);
+    transform-origin: top right;
     transition: all 0.3s ease-in-out;
     -ms-transition: all 0.3s ease-in-out;
     -o-transition: all 0.3s ease-in-out;
