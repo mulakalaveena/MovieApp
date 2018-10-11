@@ -1,10 +1,12 @@
 import React, { Component } from 'react'
-import axios from 'axios'
 import { 
     Card, CardImg, CardText, CardBody,
     CardTitle, Row, Col 
 } from 'reactstrap'; 
-import { moment } from 'moment'
+// import { moment } from 'moment'
+import { apiKey } from '../../config/config'
+import axiosInstance from '../axiosInstance'
+
 
 class Listing extends Component {
     constructor (props) {
@@ -13,21 +15,18 @@ class Listing extends Component {
             topMovies : [],
             page : 1,
             totalPages : 1,
-            movieDetail : false
+            movieDetail : false,
+            popularMovies : []
         }
     }
     componentDidMount () {
         this.getTopMovies ()
+        // this.getPopularMovies ()
     }
     getTopMovies () {
-        axios ({
+        axiosInstance ({
             method : 'GET',
-            url : `https://api.themoviedb.org/4/discover/movie?primary_release_date.gte=2018-10-10`,
-            headers: {
-                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWYxMjY4N2E5ODkxZTc1MTY0MjhkZDliNDE3ZTY4OSIsInN1YiI6IjVhOTNmNzEwMGUwYTI2MTZiZDAzMDBhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-1cpL4lWO7-UKjI41a02wxhfqM8sYSgpYfpaze6bZHI`,
-                'Content-Type': 'application/json'
-            },
-            json : true
+            url : `trending/all/day?api_key=${apiKey}`
         })
         .then(res => {
             console.log(res.data)
@@ -41,10 +40,27 @@ class Listing extends Component {
             console.log(error)
         })
     }
+    getPopularMovies () {
+        axiosInstance ({
+            method : 'GET',
+            url : `popular?api_key=${apiKey}&language=en-US`,
+        })
+        .then(res => {
+            console.log(res.data)
+            this.setState ({
+                popularMovies : res.data.results,
+                page : res.data.page,
+                totalPages : res.data.total_pages
+            })
+        })
+        .catch(error => {
+            console.log(error)
+        })
+    }
     render () {
         return (
             <div>
-                <h1>Movies to release</h1>
+                <h1>trending </h1>
                 {this.state.topMovies.length > 0 ? 
                 <Row>
                     {this.state.topMovies.map((e, key) => {

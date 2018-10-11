@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Input } from 'reactstrap'
+import { apiKey } from '../../config/config';
 import axios from 'axios'
+
 
 class Search extends Component {
     constructor (props) {
@@ -9,17 +11,24 @@ class Search extends Component {
             search : '',
             searchResults : [],
             page : 1,
-            totalPages : 1
+            totalPages : 1,
+            getSearch : false
         }
         this.handleSearch = this.handleSearch.bind(this)
-        this.getSearch = this.getSearch.bind(this)
+        // this.getSearch = this.getSearch.bind(this)
+        // this.setResults = this.setResults.bind(this)
+    }
+    handleSearch (e) {
+        this.setState({
+            search: e.target.value,
+            getSearch : true
+        })
     }
     getSearch () {
         axios ({
             method : 'GET',
-            url : `https://api.themoviedb.org/4/discover/movie/latest`,
+            url : `https://api.themoviedb.org/3/discover/search/multi?query=${this.state.search}?api_key=${apiKey}`,
             headers: {
-                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWYxMjY4N2E5ODkxZTc1MTY0MjhkZDliNDE3ZTY4OSIsInN1YiI6IjVhOTNmNzEwMGUwYTI2MTZiZDAzMDBhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-1cpL4lWO7-UKjI41a02wxhfqM8sYSgpYfpaze6bZHI`,
                 'Content-Type': 'application/json'
             },
             json : true
@@ -36,20 +45,12 @@ class Search extends Component {
             console.log(error)
         })
     }
-    handleSearch (e) {
-        this.setState({
-            search: e.target.value
-        })
-        this.getSearch ()
-    }
     render () {
         return (
             <div>
-                <Input
-                    type="search" 
-                    onChange={this.handleSearch}
-                    value = {this.state.search}
-                />
+                {this.state.getSearch ? this.getSearch () : null}
+                <label>search</label>
+                <Input type="text" value = {this.state.search} onChange={this.handleSearch}/>
             </div>
         )
     }
