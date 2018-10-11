@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { Input } from 'reactstrap'
+import { apiKey } from '../../config/config';
 import axios from 'axios'
+
 
 class Search extends Component {
     constructor (props) {
@@ -19,9 +21,8 @@ class Search extends Component {
     getSearch () {
         axios ({
             method : 'GET',
-            url : `https://api.themoviedb.org/4/discover/movie/latest`,
+            url : `https://api.themoviedb.org/3/discover/search/multi?query=${this.state.search}?api_key=${apiKey}`,
             headers: {
-                'Authorization': `Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI2MWYxMjY4N2E5ODkxZTc1MTY0MjhkZDliNDE3ZTY4OSIsInN1YiI6IjVhOTNmNzEwMGUwYTI2MTZiZDAzMDBhMiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.-1cpL4lWO7-UKjI41a02wxhfqM8sYSgpYfpaze6bZHI`,
                 'Content-Type': 'application/json'
             },
             json : true
