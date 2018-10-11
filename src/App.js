@@ -10,6 +10,7 @@ import {
 import MovieDetails from './components/Listing/MovieDetails';
 
 
+
 class App extends Component {
   
   render() {
