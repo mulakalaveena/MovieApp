@@ -6,24 +6,25 @@ import {
 // import { moment } from 'moment'
 import { apiKey } from '../../config/config'
 import axiosInstance from '../axiosInstance'
+import { Redirect } from 'react-router-dom'
 
 
 class Listing extends Component {
     constructor (props) {
         super (props)
         this.state = {
-            topMovies : [],
+            trendingMovies : [],
             page : 1,
             totalPages : 1,
             movieDetail : false,
-            popularMovies : []
+            popularMovies : [],
+            movieId : 0
         }
     }
     componentDidMount () {
-        this.getTopMovies ()
-        // this.getPopularMovies ()
+        this.getTrendingMovies ()
     }
-    getTopMovies () {
+    getTrendingMovies () {
         axiosInstance ({
             method : 'GET',
             url : `trending/all/day?api_key=${apiKey}`
@@ -31,7 +32,7 @@ class Listing extends Component {
         .then(res => {
             console.log(res.data)
             this.setState ({
-                topMovies : res.data.results,
+                trendingMovies : res.data.results,
                 page : res.data.page,
                 totalPages : res.data.total_pages
             })
@@ -40,32 +41,21 @@ class Listing extends Component {
             console.log(error)
         })
     }
-    getPopularMovies () {
-        axiosInstance ({
-            method : 'GET',
-            url : `popular?api_key=${apiKey}&language=en-US`,
-        })
-        .then(res => {
-            console.log(res.data)
-            this.setState ({
-                popularMovies : res.data.results,
-                page : res.data.page,
-                totalPages : res.data.total_pages
-            })
-        })
-        .catch(error => {
-            console.log(error)
+    setMovieDetail (e) {
+        this.setState ({
+            movieDetail : true,
+            movieId : e
         })
     }
     render () {
         return (
             <div className="container-fluid">
-                <h1>Movies to release</h1>
-                {this.state.topMovies.length > 0 ? 
+                <h1>Trending Movies</h1>
+                {this.state.trendingMovies.length > 0 ? 
                 <Row>
-                    {this.state.topMovies.map((e, key) => {
+                    {this.state.trendingMovies.map((e, key) => {
                         return <Col  md="4" sm="12" key = {key} >
-                        <Card onClick = {() => this.setState({movieDetail : !this.state.movieDetail}) }>
+                        <Card onClick = {() => this.setMovieDetail(e.id)}>
                             <CardImg top width="100px" src={`https://image.tmdb.org/t/p/w500/${e.poster_path}`} alt={e.title} />
                             <CardBody>
                             <CardTitle>{e.title}</CardTitle>
@@ -76,7 +66,7 @@ class Listing extends Component {
                     })}
                 </Row>
                 : <p>No Records</p>}
-                {/* {this.state.movieDetail ? <MovieDetails/> : null } */}
+                {this.state.movieDetail ? <Redirect push to={{pathname:`/movie/${this.state.movieId}`, state : {id : this.state.movieId}}}/> : null }
             </div>
         )
     }

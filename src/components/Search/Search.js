@@ -1,8 +1,7 @@
 import React, { Component } from 'react'
 import { Input } from 'reactstrap'
 import { apiKey } from '../../config/config';
-import axios from 'axios'
-
+import axiosInstance from '../axiosInstance'
 
 class Search extends Component {
     constructor (props) {
@@ -19,13 +18,9 @@ class Search extends Component {
         this.onToggleFocus = this.onToggleFocus.bind(this)
     }
     getSearch () {
-        axios ({
+        axiosInstance ({
             method : 'GET',
-            url : `https://api.themoviedb.org/3/discover/search/multi?query=${this.state.search}?api_key=${apiKey}`,
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            json : true
+            url : `/search/multi?query=${this.state.search}?api_key=${apiKey}`
         })
         .then(res => {
             console.log(res.data)
