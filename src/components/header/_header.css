@@ -5,6 +5,10 @@
     color: var(--theme-dark-btn);
     margin-right: 15px;
 }
+.header-section .navbar-brand small{
+    font-size: 21px;
+    text-transform: uppercase;
+}
 .header-section .navbar-brand .m{
     color: violet;
 }
